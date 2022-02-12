@@ -2,12 +2,13 @@ import sys, pygame
 
 pygame.init()
 
-
 size = width, height = 820, 840
 
 speed = [1, 1]
 
 black = 255, 165, 0
+green = (0, 255, 0)
+blue = (0, 0, 128)
 
 
 screen = pygame.display.set_mode(size)
@@ -22,6 +23,14 @@ barrect = bar.get_rect()
 barrect = ballrect.move([10,0])
 bar2rect = bar.get_rect()
 bar2rect = bar2rect.move([width-40,0])
+
+p1points = 0
+p2points = 0
+
+font = pygame.font.Font('freesansbold.ttf', 32)
+# create a text surface object,
+# on which text is drawn on it.
+
 while 1:
 
     for event in pygame.event.get():
@@ -40,10 +49,15 @@ while 1:
              if event.key == pygame.K_DOWN:
                  if bar2rect.bottom<height:
                     bar2rect = bar2rect.move([0,50])
-                    
-    if ballrect.left < 0 or ballrect.right > width:
 
-        speed[0] = -speed[0]
+
+ 
+    if ballrect.left < 0:
+         p2points  += 1
+    if ballrect.right > width:
+        p1points += 1
+
+        #speed[0] = -speed[0]
 
     if ballrect.top < 0 or ballrect.bottom > height:
 
@@ -52,7 +66,11 @@ while 1:
     ballrect = ballrect.move(speed)
 
     screen.fill(black)
+    text = font.render("p1 %s p2 %s"%(p1points, p2points), True, green, blue)
 
+    textRect = text.get_rect()
+    textRect.center = (width // 2, 50)
+    screen.blit(text, textRect)
     screen.blit(ball, ballrect)
 
     screen.blit(bar,barrect)
