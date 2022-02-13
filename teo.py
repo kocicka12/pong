@@ -54,9 +54,10 @@ while 1:
  
     if ballrect.left < 0:
          p2points  += 1
+         ballrect.center = [width/2,height/2]
     if ballrect.right > width:
         p1points += 1
-
+        ballrect.center = [width/2,height/2]
         #speed[0] = -speed[0]
 
     if ballrect.top < 0 or ballrect.bottom > height:
